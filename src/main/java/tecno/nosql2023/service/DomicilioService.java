@@ -32,7 +32,7 @@ public class DomicilioService {
     }
 
     public Flux<Domicilio> getAllDomCrit(String barrio, String localidad, String depto){
-        return this.domicilioRepository.findByBarrioOrDepartamentoOrLocalidad(barrio, localidad, depto);
+        return this.domicilioRepository.buscarDom(barrio,localidad,depto);
     }
     public Mono<Domicilio> addDomicilio(String ciPersona, Domicilio domicilio) {
         ObjectId obj = new ObjectId();
@@ -42,5 +42,8 @@ public class DomicilioService {
         return this.personaRepository.findById(ciPersona)
                 .switchIfEmpty(Mono.error(new ExcepcionCustom("No existe una persona con la cedula ingresada ", HttpStatus.UNAUTHORIZED)))
                 .then(this.domicilioRepository.save(domicilio));
+    }
+    public  Mono<Void> deleteAllDom(){
+        return this.domicilioRepository.deleteAll();
     }
 }

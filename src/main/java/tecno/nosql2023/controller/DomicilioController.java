@@ -1,5 +1,6 @@
 package tecno.nosql2023.controller;
 
+import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +31,8 @@ public class DomicilioController {
         return new ResponseEntity<>(domiciliosAllPersona, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllDomCriterio/?barrio={barrio}&localidad={localidad}&depto={depto}")
-    public ResponseEntity<Flux<Domicilio>> getAllDomCriterio(@PathVariable("barrio") String barrio, @PathVariable("localidad") String localidad, @PathVariable("depto") String depto){
+    @RequestMapping("/getAllDomCriterio")
+    public ResponseEntity<Flux<Domicilio>> getAllDomCriterio(@Nullable @RequestParam(value = "barrio", required = false) String barrio, @Nullable @RequestParam(value = "localidad", required = false) String localidad, @Nullable @RequestParam(value = "depto", required = false) String depto){
         Flux<Domicilio> domiciliosCrit=this.domicilioService.getAllDomCrit(barrio, localidad, depto);
         return new ResponseEntity<>(domiciliosCrit, HttpStatus.OK);
     }
@@ -41,4 +42,9 @@ public class DomicilioController {
         return new ResponseEntity<>(domicilioAdd, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/deleteDomicilios")
+    public ResponseEntity<Mono<Void>> deleteDomicilios(){
+        Mono<Void> domicilioDelete=this.domicilioService.deleteAllDom();
+        return new ResponseEntity<>(domicilioDelete, HttpStatus.CREATED);
+    }
 }

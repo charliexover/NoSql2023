@@ -26,6 +26,9 @@ public class PersonaService {
                 .flatMap(existingUser -> Mono.error(new ExcepcionCustom("Ya existe una persona con esa cedula ", HttpStatus.UNAUTHORIZED)))
                 .then(this.personaRepository.save(persona));
     }
+    public Mono<Void> deleteAllPersonas(){
+        return this.personaRepository.deleteAll();
+    }
 
 
 }

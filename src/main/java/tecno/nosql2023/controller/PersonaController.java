@@ -26,4 +26,9 @@ public class PersonaController {
         Mono<Persona> personaAdd=this.personaService.addPersona(persona);
         return new ResponseEntity<>(personaAdd, HttpStatus.CREATED);
     }
+@DeleteMapping("/deletePersonas")
+    public ResponseEntity<Mono<Void>> deletePersonas() {
+        Mono<Void> personaDelete=this.personaService.deleteAllPersonas();
+        return new ResponseEntity<>(personaDelete, HttpStatus.CREATED);
+    }
 }
