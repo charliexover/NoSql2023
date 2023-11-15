@@ -2,6 +2,7 @@ package tecno.nosql2023.service;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,8 @@ public class DomicilioService {
         return this.domicilioRepository.findAll();
     }
 
-    public Flux<Domicilio> getAllDomiciliosPersona(String ciPersona){
-        return this.domicilioRepository.findByCiPerOrderByIdDomDesc(ciPersona)
+    public Flux<Domicilio> getAllDomiciliosPersona(String ciPersona, Pageable pageable){
+        return this.domicilioRepository.findByCiPerOrderByIdDomDesc(ciPersona, pageable)
                 .switchIfEmpty(Mono.error(new ExcepcionCustom("No existe una persona con la cedula ingresada ", HttpStatus.UNAUTHORIZED)));
     }
 

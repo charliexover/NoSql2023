@@ -2,6 +2,8 @@ package tecno.nosql2023.controller;
 
 import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +27,11 @@ public class DomicilioController {
         return new ResponseEntity<>(domiciliosAll, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllDomicilios/{ciPersona}")
-    public ResponseEntity<Flux<Domicilio>> getAllDomiciliosPersona(@PathVariable("ciPersona") String ciPersona){
-        Flux<Domicilio> domiciliosAllPersona=this.domicilioService.getAllDomiciliosPersona(ciPersona);
+    @RequestMapping("/getDomiciliosPersona")
+    public ResponseEntity<Flux<Domicilio>> getDomiciliosPersona(@RequestParam(value = "ci") String ciPersona, @RequestParam(value = "page", defaultValue = "0", required = false) int page,
+                                                                   @RequestParam(value = "size", defaultValue = "5", required = false) int size){
+        Pageable paging = PageRequest.of(page, size);
+        Flux<Domicilio> domiciliosAllPersona=this.domicilioService.getAllDomiciliosPersona(ciPersona, paging);
         return new ResponseEntity<>(domiciliosAllPersona, HttpStatus.OK);
     }
 
