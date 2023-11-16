@@ -54,6 +54,9 @@ En el body de esta llamada va un json del estilo:
     "barrio": "chancha"
 }
 http://localhost:8089/api/getAllDomCriterio?barrio=chancha&localidad=sas&depto=asa donde barrio, localidad y depto son los campos por los cuales se busca el domicilio. No tienen porque estar todos
+http://localhost:8089/api/getDomiciliosPersona?ci=44854138&page=1&size=3 donde el campo page y el campo size son opcionales. Por defecto sin campos muestra hasta 5 direcciones
+http://localhost:8089/api/deleteDomicilios lo agregamos sobretodo para probar y poder eliminar todos los domicilios
+http://localhost:8089/api/deletePersonas lo agregamos sobretodo para probar y poder eliminar todas las personas
 
 
 Jmeter:
