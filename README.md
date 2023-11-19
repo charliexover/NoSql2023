@@ -1,73 +1,86 @@
 # NoSql2023
 
-Lenguaje utilizado JAVA con sprinboot
-Base de datos Mongodb con atlas para mantener la base en la nube
-Ide utilizado Intellij idea
-Para chequear la base utilizamos Mongodb Compass
-Para la ejecucion utilizamos postman
-Para la prueba de carga utilizamos Jmeter
-Automatizacion de pruebas con Jenkins
+Lenguaje y herramientas utilizadas: 
 
+- JAVA con Springboot.
+- Mongodb Atlas.
+- IntelliJ Idea.
+- Mongodb Compass.
+- Postman.
+- Jmeter.
+- Jenkins.
 
 Modelo de datos lógico:
 
-Personas (ci, nombre, apellido, edad) con id cedula
-Domicilios (id, ci, departamento, localidad, calle, nro, apto, padron, ruta, km, letra, barrio) con clave id
+- Personas (ci, nombre, apellido, edad) con clave ci
 
-En un principio habiamos pensado usar una tercera coleccion Direcciones compuesto por el id de Domicilios y el id de Personas pero al avanzar vimos que no era lo mas optimo por las consultas y redundancia de datos. Por lo que procedimos a usar solo dos colecciones y de esta forma las consultas quedan mas eficientes
+- Domicilios (idDom, ciPer, departamento, localidad, calle, nro, apto, padron, ruta, km, letra, barrio) con clave idDom
+
+En un principio se habia propuesto usar una tercera coleccion Direcciones compuesto por el id de Domicilios y el id de Personas pero al avanzar vimos que no era lo mas óptimo para las consultas y redundancia de datos, por lo que procedimos a usar solo dos colecciones y de esta forma las consultas quedarian mas eficientes.
 
 Proceso de instalacion:
 
-- Instalamos el ide intellij
-- Instalamos java 17 correto
-- Instalamos mongodb que incluye el mongdb compass
-- Importar el proyecto git
-- Configurar el archivo aplication properties (el cual adjuntamos en el correo de la entrega ya que no lo subimos al git para que no se nos rompiera la configuracion)
+- Instalar el IDE IntelliJ IDEA.
+- Instalar java 17.
+- Clonar el proyecto Git.
+- Configurar el archivo application properties (el cual adjuntamos en el correo de la entrega ya que no lo subimos al git por cuestiones de seguridad)
   El archivo application.properties va en la carpeta src/main/resources
-  El contenido del archivo application.properties tiene lo siguiente:
-  spring.data.mongodb.uri=mongodb+srv://Ch91:RdKjF54WY4Amc4@tecnocluster.sslbqbf.mongodb.net/?retryWrites=true&w=majority
-  spring.data.mongodb.database=NoSQL_Obli
-  server.port=8089
-- Tener en cuenta que el server.port tendra configurado el puerto que sera utilizado para levantar la api
-- Hacer el build y ejecutar el archivo main NoSql2023Application.java
+  El contenido del archivo application.properties tiene los datos necesarios para conectarse al cluster y por consiguiente a la database en MongoDB Atlas.
+- Tener en cuenta que el server.port tendra configurado el puerto que sera utilizado para levantar la api.
+- Hacer el build y correr el archivo main NoSql2023Application.java
 
-Ejecucion postman:
+Operaciones ofrecidas como API REST:
 
-Ajuntamos json de la coleccion en el correo que contiene las llamadas a la api
-Las llamadas a las api son:
-http://localhost:8089/api/getAllPersonas
 http://localhost:8089/api/addPersona
-http://localhost:8089/api/getAllDomicilios
-http://localhost:8089/api/addDomicilio/888 donde 888 es la cedula de la persona existente en el sistema a la que se le va a agregar la direccion
-En el body de esta llamada va un json del estilo:
+
+Se le pasa un JSON con lo siguientes datos:
 {
 
-    "departamento":"Soriano",
-    "localidad": "canelones",
-    "calle": "malibu",
-    "nro": 2245,
+    "ci": "12586987",
+    "nombre":"Emiliano",
+    "apellido": "Furtado",
+    "edad": "26"
+}
+
+http://localhost:8089/api/getAllPersonas (devuelve todas las personas de la bd)
+
+http://localhost:8089/api/addDomicilio/12586987 (donde 12586987 es la cedula de la persona existente en el sistema a la que se le va a agregar la dirección)
+
+Se le pasa además un JSON con lo siguientes datos:
+{
+
+    "departamento":"Montevideo",
+    "localidad": "Montevideo",
+    "calle": "Cno Maldonado",
+    "nro": 1378,
     "apto": 12,
     "padron": 100254,
-    "ruta": 9,
-    "km": 21,
+    "ruta": 8,
+    "km": 12,
     "letra": "D",
-    "barrio": "chancha"
+    "barrio": "Union"
 }
-http://localhost:8089/api/getAllDomCriterio?barrio=chancha&localidad=sas&depto=asa donde barrio, localidad y depto son los campos por los cuales se busca el domicilio. No tienen porque estar todos
-http://localhost:8089/api/getDomiciliosPersona?ci=44854138&page=1&size=3 donde el campo page y el campo size son opcionales. Por defecto sin campos muestra hasta 5 direcciones
-http://localhost:8089/api/deleteDomicilios lo agregamos sobretodo para probar y poder eliminar todos los domicilios
-http://localhost:8089/api/deletePersonas lo agregamos sobretodo para probar y poder eliminar todas las personas
+
+http://localhost:8089/api/getAllDomicilios (devuelve todos los domicilios de la bd)
+
+http://localhost:8089/api/getDomiciliosPersona?ci=12586987&page=0&size=3 (el campo page y size son opcionales. Sin ellos por defecto muestra hasta 5 domicilios.
+
+http://localhost:8089/api/getAllDomCriterio?barrio=Union&localidad=Montevideo&depto=Montevideo (no es obligatorio usar los 3 parametros, se puede buscar por uno solo o dos campos combinados)
+
+http://localhost:8089/api/deleteDomicilios (elimina todos los domicilios de la bd)
+
+http://localhost:8089/api/deletePersonas (elimina todas las personas de la bd)
 
 
-Jmeter:
-Realizamos pruebas de carga con los diferentes endpoints, tirando entorno a las 200 usuarios con delay de 10s 
-Vimos que la api soporta la carga y a su vez analizamos las respuestas de los diferentes endpoints
-En conclusion jmeter es un sistema muy utilizado para realizar estas pruebas, vimos que es bastante intuitivo y util
+Jmeter: 
+Realizamos pruebas de carga con los diferentes endpoints, tirando entorno a las 200 usuarios con delay de 10s.  
+Vimos que la api soporta la carga y a su vez analizamos las respuestas de los diferentes endpoints. 
+En conclusion jmeter es un sistema muy utilizado para realizar estas pruebas, vimos que es bastante intuitivo y util.
 
-Jenkins:
-Realizamos la configuracion del sistema con algo de dificultad (no es muy intuitivo)
-Configuramos el ambiente para que tomara el git como codigo fuente
-Realizamos la configuracion para que utilice newman (comando de terminal para postman)
-Una vez pulsamos construir realiza la ejecucion del sistema
-Finaliza sin errores
-Procedimos a leer la respuesta la cual es coherente pero no es muy intuitivo
+Jenkins: 
+Realizamos la configuracion del sistema con algo de dificultad (no es muy intuitivo). 
+Configuramos el ambiente para que tomara el git como codigo fuente. 
+Realizamos la configuracion para que utilice newman (comando de terminal para postman). 
+Una vez pulsamos construir realiza la ejecucion del sistema. 
+Finaliza sin errores. 
+Procedimos a leer la respuesta la cual es coherente pero no es muy intuitivo. 
