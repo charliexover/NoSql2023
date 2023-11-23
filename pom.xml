@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>tecno</groupId>
-    <artifactId>NoSql2023</artifactId>
+    <artifactId>nosql-2023</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>NoSql2023</name>
-    <description>NoSql2023</description>
+    <name>nosql-2023</name>
+    <description>nosql-2023</description>
     <properties>
         <java.version>17</java.version>
     </properties>

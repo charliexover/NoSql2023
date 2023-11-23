@@ -9,6 +9,7 @@ Lenguaje y herramientas utilizadas:
 - Postman.
 - Jmeter.
 - Jenkins.
+- Docker desktop.
 
 Modelo de datos lógico:
 
@@ -83,4 +84,14 @@ Configuramos el ambiente para que tomara el git como codigo fuente.
 Realizamos la configuracion para que utilice newman (comando de terminal para postman). 
 Una vez pulsamos construir realiza la ejecucion del sistema. 
 Finaliza sin errores. 
-Procedimos a leer la respuesta la cual es coherente pero no es muy intuitivo. 
+Procedimos a leer la respuesta la cual es coherente pero no es muy intuitivo.
+
+Docker:
+IntelJ Idea tiene instalado por defecto un plugin de docker que nos hizo mas fácil la tarea de dockerizar la app.
+Solo fue necesario crear la conexion con Docker desktop desde los settings.
+Con la herramienta de Maven integrada en IntelJ IDea se creo el JAR de la app y luego en la terminal usar el comando:
+{
+
+    ./mvnw spring-boot:build-image //crea la imagen a partir del jar
+    docker run -p 8091:8091 -t nosql-2023:0.0.1-SNAPSHOT //corremos la app ya dockerizada
+}
